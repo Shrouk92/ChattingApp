@@ -1,5 +1,6 @@
 package com.example.mychattingapp.viewmodels
 
+import android.app.Activity
 import android.content.Intent
 import android.view.View
 import android.widget.Toast
@@ -14,7 +15,6 @@ import com.google.firebase.ktx.Firebase
 
 
 class LogInViewModel:ViewModel() {
-    private lateinit var auth: FirebaseAuth
 
 
     val email =ObservableField<String>()
@@ -27,7 +27,6 @@ class LogInViewModel:ViewModel() {
     {
         val mail=email.get().toString()
         val pass=password.get().toString()
-        auth = Firebase.auth
         // Sign up to FireBase
         firebaseAuth
             .signInWithEmailAndPassword(mail,pass)
@@ -35,6 +34,8 @@ class LogInViewModel:ViewModel() {
                 if (task.isSuccessful) {
                     val intent = Intent(view.context, MainActivity::class.java)
                     view.context.startActivity(intent)
+                    val activity=view.context as Activity
+                    activity.finish()
 
 
                 } else {
