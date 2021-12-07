@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.mychattingapp.R
 import com.example.mychattingapp.adapters.MessageAdapter
@@ -28,9 +29,12 @@ class ChattingActivity : AppCompatActivity() {
          messageAdapter= MessageAdapter( messageList)
         chattingBinding.chatrecyclerview.adapter=messageAdapter
         // set the page of chatting with the other person
-        val recieverUserName=intent.getStringExtra("name")
+        val recieverUserName=intent.getStringExtra("RecipientName")
            supportActionBar?.title=recieverUserName
-        val recieverUid=intent.getStringExtra("Uid")
-        val senderUid=firebaseAuth.currentUser?.uid
+        // sender and reciever IDs
+        val  recipientUid=intent.getStringExtra("RecipientUid")
+        val senderUid=firebaseAuth.currentUser?.uid as Observer<String>
+        chattingPageViewModel.recipientId.value= recipientUid
+        chattingPageViewModel.senderId.observe(this,senderUid)
     }
 }
