@@ -76,7 +76,7 @@
             android:layout_marginTop="30dp"
             android:text="LogIn"
             android:textSize="30sp"
-            android:onClick="@{()->loginviewmodel::Log_In_User}"
+            android:onClick="@{loginviewmodel::Log_In_User}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layouttext">

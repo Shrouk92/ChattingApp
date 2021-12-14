@@ -8,6 +8,6 @@ import com.google.firebase.ktx.Firebase
 
 object FirebaseUtils {
     var firebaseAuth: FirebaseAuth = Firebase.auth
-    var dbReference:DatabaseReference= FirebaseDatabase.getInstance().getReference()
+    var dbReference:DatabaseReference= FirebaseDatabase.getInstance().reference
 
 }

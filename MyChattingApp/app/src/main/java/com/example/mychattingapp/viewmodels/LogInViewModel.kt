@@ -9,43 +9,44 @@ import androidx.lifecycle.ViewModel
 import com.example.mychattingapp.firebaseutils.FirebaseUtils.firebaseAuth
 import com.example.mychattingapp.ui.MainActivity
 import com.example.mychattingapp.ui.SignUpActivity
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+
 
 
 class LogInViewModel:ViewModel() {
 
 
-    val email =ObservableField<String>()
-    val password=ObservableField<String>()
+    val email = ObservableField<String>()
+    val password = ObservableField<String>()
 
 
 
     // Function to LogIn User
     public fun Log_In_User(view:View)
     {
-        val mail=email.get().toString()
-        val pass=password.get().toString()
-        // Sign up to FireBase
-        firebaseAuth
-            .signInWithEmailAndPassword(mail,pass)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val intent = Intent(view.context, MainActivity::class.java)
-                    view.context.startActivity(intent)
-                    val activity=view.context as Activity
-                    activity.finish()
+
+        // Sign In to FireBase
+        email.get()?.let {
+            password.get()?.let { it1 ->
+                firebaseAuth
+                    .signInWithEmailAndPassword(it, it1)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val intent = Intent(view.context, MainActivity::class.java)
+                            view.context.startActivity(intent)
+                            val activity=view.context as Activity
+                            activity.finish()
 
 
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Toast.makeText(
-                        view.context, "Authentication failed.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(
+                                view.context, "Authentication failed.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
             }
+        }
     }
 
 

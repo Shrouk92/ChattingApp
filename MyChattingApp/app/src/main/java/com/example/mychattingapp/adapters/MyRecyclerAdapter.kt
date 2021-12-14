@@ -28,15 +28,15 @@ class MyRecyclerAdapter(val data: ArrayList<ChattingUsers>):RecyclerView.Adapter
 
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val currentuser=data[position]
-      holder.bindingItem.textuser.text= currentuser.name
+        val currentUser=data[position]
+      holder.bindingItem.textuser.text= currentUser.name
 
         holder.itemView.setOnClickListener(View.OnClickListener {
             // open the chatting page when choice a person from list
             // send the data of the choisen person to chat with from the recycler view
             val intent=Intent(holder.itemView.context,ChattingActivity::class.java)
-            intent.putExtra("RecipientName",currentuser.name)
-            intent.putExtra("RecipientUid",currentuser.Id)
+            intent.putExtra("RecipientName",currentUser.name)
+            intent.putExtra("RecipientUid",currentUser.UId)
             holder.itemView.context.startActivity(intent)
         })
 
