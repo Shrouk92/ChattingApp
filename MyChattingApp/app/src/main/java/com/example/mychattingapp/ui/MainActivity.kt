@@ -27,12 +27,15 @@ class MainActivity : AppCompatActivity() {
         usersViewModel=ViewModelProvider(this).get(UsersViewModel::class.java)
         binding.recyclerbinding=usersViewModel
 
+
+        // do this one for recycler view of messages // in order not to repeate data
         usersViewModel.userslist.observe(this, Observer {
         myRecyclerAdapter=MyRecyclerAdapter(it)
             myRecyclerAdapter.notifyDataSetChanged()
             binding.usersRecyclerview.adapter=myRecyclerAdapter
 
         })
+
 
 
     }

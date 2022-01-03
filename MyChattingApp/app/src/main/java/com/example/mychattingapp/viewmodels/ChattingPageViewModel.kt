@@ -14,9 +14,9 @@ import com.google.firebase.database.ValueEventListener
 class ChattingPageViewModel:ViewModel() {
 
     var message=ObservableField<String>()
-    var senderId=MutableLiveData<String>()
-    var recipientId=MutableLiveData<String>()
+    val recipientId:MutableLiveData<String> by lazy { MutableLiveData<String>() }
     var messageList= ArrayList<Message>()
+
 
 
 
@@ -24,30 +24,37 @@ class ChattingPageViewModel:ViewModel() {
     {
         val senderUid= FirebaseUtils.firebaseAuth.currentUser?.uid
 
-        val SenderRoom= recipientId.toString() + senderUid
-       val RecipientRoom= senderUid + recipientId.toString()
-//        val  SenderRoom="AAAAAAAAAAAA"
-//        val RecipientRoom="nwdkhafhhjfs"
 
-        val enteredMessage=message.get().toString()
-        val message=Message(enteredMessage,senderUid!!)
+        val senderRoom= recipientId.value + senderUid
+       val recipientRoom= senderUid + recipientId.value
 
-        SaveChattingMessagesToDB( message ,SenderRoom,RecipientRoom)
+
+        val enteredMessage= message.get()
+
+            val message= enteredMessage?.let { recipientId.value?.let { it1 ->
+                Message(it,senderUid!!,
+                    it1
+                )
+            } }
+            if (message != null) {
+                saveChattingMessagesToDB( message ,senderRoom,recipientRoom)
+            }
+
+
 
     }
 
     // function to save chatting messages to Firebase DB
-    public fun SaveChattingMessagesToDB( message:Message,  senderRoom:String, recipientRoom:String)
+    public fun saveChattingMessagesToDB( message:Message,  senderRoom:String, recipientroom:String)
     {
-       dbReference.child("chats").child("senderRoom").child("messages").push()
-           .setValue(message).addOnSuccessListener {
-               dbReference.child("chats").child("recipientRoom").child("messages").push()
-                   .setValue(message)
-           }
+
+        dbReference.child("chats").child(senderRoom).child("messages").push()
+            .setValue(message)
+        dbReference.child("chats").child(recipientroom).child("messages").push()
+            .setValue(message)
 
 
     }
-
 
 
     public fun GetMessagesFromDB():ArrayList<Message>
@@ -55,9 +62,9 @@ class ChattingPageViewModel:ViewModel() {
         dbReference.child("chats").child("senderRoom").child("messages")
             .addValueEventListener(object :ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    for(itemsnapshot in snapshot.children)
+                    for(itemising in snapshot.children)
                     {
-                      val  m =itemsnapshot.getValue(Message::class.java)
+                      val  m =itemising.getValue(Message::class.java)
                         messageList.add(m!!)
                     }
                 }

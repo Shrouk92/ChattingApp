@@ -16,14 +16,13 @@ class UsersViewModel :ViewModel(){
     val userslist= MutableLiveData<ArrayList<ChattingUsers>>()
     val users= ArrayList<ChattingUsers>()
     init {
-        getusers()
+        get_users()
     }
 
 
 
-    public fun getusers()
+    public fun get_users()
     {
-
         dbReference.child("user").addValueEventListener(object :ValueEventListener
         {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -31,34 +30,25 @@ class UsersViewModel :ViewModel(){
                 {
                     val chattingUsers=mysnapshot.getValue(ChattingUsers::class.java)
                     if(firebaseAuth.currentUser?.email!=chattingUsers?.email) {
-                        users.add(chattingUsers!!)
-                        userslist.postValue(users)
+                        if (chattingUsers != null) {
+                            users.add(chattingUsers)
+                        }
+                        else
+                        {
+                          val   c=ChattingUsers("em","em","em")
+                            users.add(c)
+                        }
                     }
                 }
+                userslist.postValue(users)
 
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+
             }
 
         })
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

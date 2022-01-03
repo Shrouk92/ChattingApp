@@ -3,6 +3,7 @@ package com.example.mychattingapp.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -18,37 +19,33 @@ class ChattingActivity : AppCompatActivity() {
     private lateinit var chattingBinding: ActivityChattingBinding
     private lateinit var chattingPageViewModel: ChattingPageViewModel
     private lateinit var messageAdapter: MessageAdapter
-      var messageList=ArrayList<Message>()
+    var messageList = ArrayList<Message>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        chattingBinding=DataBindingUtil.setContentView(this,R.layout.activity_chatting)
-        chattingPageViewModel=ViewModelProvider(this).get(ChattingPageViewModel::class.java)
-        chattingBinding.chattingbinding=chattingPageViewModel
+        chattingBinding = DataBindingUtil.setContentView(this, R.layout.activity_chatting)
+        chattingPageViewModel = ViewModelProvider(this).get(ChattingPageViewModel::class.java)
+        chattingBinding.chattingbinding = chattingPageViewModel
+        val recipientUid = intent.getStringExtra("RecipientUid")
+        chattingPageViewModel.recipientId.value=recipientUid!!
+       // Toast.makeText(applicationContext, recipientUid, Toast.LENGTH_LONG).show()
 
         // fill the array of messages
-      //  messageList=ArrayList()
-       messageList= chattingPageViewModel.GetMessagesFromDB()
-        chattingBinding.chatrecyclerview.layoutManager=LinearLayoutManager(this)
-         messageAdapter= MessageAdapter( messageList)
-        chattingBinding.chatrecyclerview.adapter=messageAdapter
+        //  messageList=ArrayList()
+        messageList = chattingPageViewModel.GetMessagesFromDB()
+        chattingBinding.chatrecyclerview.layoutManager = LinearLayoutManager(this)
+        messageAdapter = MessageAdapter(messageList)
+        chattingBinding.chatrecyclerview.adapter = messageAdapter
         // set the page of chatting with the other person
-        val recieverUserName=intent.getStringExtra("RecipientName")
-           supportActionBar?.title=recieverUserName
-
-        // sender and reciever IDs
+        val recieverUserName = intent.getStringExtra("RecipientName")
+        supportActionBar?.title = recieverUserName
 
 
-        val recipientUid= intent.getStringExtra("RecipientUid")
-
-
-
-
-        // ask about value or observe
-    //    chattingPageViewModel.recipientId.observe(this,recipientUid as Observer<String>)
-        chattingPageViewModel.recipientId.value= recipientUid
-
-     //   chattingPageViewModel.senderId.observe(this,senderUid as Observer<String>)
 
     }
 }
+
+
+
+
+

@@ -11,59 +11,62 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.ChattingActivity">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/chatrecyclerview"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            tools:context=".ui.ChattingActivity">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/chatrecyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="600dp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintBottom_toTopOf="@+id/msgtxt"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/msgtxt"
+                android:layout_width="320dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="55dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/box"
+                android:hint="Type message here"
+                android:padding="15dp"
+                android:text="@={chattingbinding.message}"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnsendmsg"
+                app:layout_constraintTop_toBottomOf="@+id/chatrecyclerview"
+                app:layout_constraintVertical_bias="0.0">
+
+            </EditText>
+
+            <ImageButton
+                android:id="@+id/btnsendmsg"
+                android:layout_width="42dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/ic_baseline_send_24"
+                android:onClick="@{chattingbinding::Send_Message}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.739"
+                app:layout_constraintStart_toEndOf="@+id/msgtxt"
+                app:layout_constraintTop_toBottomOf="@+id/chatrecyclerview"
+                app:layout_constraintVertical_bias="0.428">
+
+            </ImageButton>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            android:layout_marginTop="4dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/msgtxt"
-            android:layout_width="320dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="76dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/box"
-            android:hint="Type message here"
-            android:padding="15dp"
-            android:text="@={chattingbinding.message}"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/chatrecyclerview"
-            app:layout_constraintVertical_bias="0.985">
-
-        </EditText>
-
-        <ImageButton
-            android:id="@+id/btnsendmsg"
-            android:layout_width="42dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="76dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:src="@drawable/ic_baseline_send_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.515"
-            app:layout_constraintStart_toEndOf="@+id/msgtxt"
-            android:onClick="@{chattingbinding::Send_Message}"
-            app:layout_constraintTop_toBottomOf="@+id/chatrecyclerview"
-            app:layout_constraintVertical_bias="0.987">
-
-        </ImageButton>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

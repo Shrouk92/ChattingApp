@@ -14,13 +14,13 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/textuser"
+            android:id="@+id/text_user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text="Shrouk"
             android:textSize="30sp"
-            android:background="@color/browser_actions_bg_grey"
+            android:textColor="@color/white"
+            android:background="@color/black"
             android:padding="15dp">
 
         </TextView>
