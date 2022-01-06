@@ -21,7 +21,7 @@ class MessageAdapter(val messages:ArrayList<Message>) : RecyclerView.Adapter<Rec
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater=LayoutInflater.from(parent.context)
-        if(viewType==2)
+        if(viewType==1)
         {
             val view: RecievedMessageBinding =
                 DataBindingUtil.inflate(inflater, R.layout.recieved_message,parent,false)
