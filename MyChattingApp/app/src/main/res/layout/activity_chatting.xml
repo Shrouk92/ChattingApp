@@ -11,39 +11,52 @@
 
     </data>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        app:layout_scrollFlags="scroll|exitUntilCollapsed"
+        >
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/chatrecyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="600dp"
+            android:layout_marginTop="60dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
+            >
+
+
+        </androidx.recyclerview.widget.RecyclerView>
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context=".ui.ChattingActivity">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/chatrecyclerview"
-                android:layout_width="match_parent"
-                android:layout_height="600dp"
-                android:layout_marginTop="4dp"
-                app:layout_constraintBottom_toTopOf="@+id/msgtxt"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            android:layout_gravity="bottom"
+            >
 
             <EditText
                 android:id="@+id/msgtxt"
                 android:layout_width="320dp"
                 android:layout_height="50dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="55dp"
-                android:layout_marginBottom="10dp"
                 android:background="@drawable/box"
                 android:hint="Type message here"
                 android:padding="15dp"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
                 android:text="@={chattingbinding.message}"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btnsendmsg"
-                app:layout_constraintTop_toBottomOf="@+id/chatrecyclerview"
-                app:layout_constraintVertical_bias="0.0">
+                app:layout_constraintBottom_toBottomOf="parent">
 
             </EditText>
 
@@ -51,21 +64,25 @@
                 android:id="@+id/btnsendmsg"
                 android:layout_width="42dp"
                 android:layout_height="50dp"
-                android:layout_marginTop="60dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="20dp"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="350dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/ic_baseline_send_24"
                 android:onClick="@{chattingbinding::Send_Message}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.739"
-                app:layout_constraintStart_toEndOf="@+id/msgtxt"
-                app:layout_constraintTop_toBottomOf="@+id/chatrecyclerview"
-                app:layout_constraintVertical_bias="0.428">
+                app:layout_constraintStart_toEndOf="@+id/msgtxt" />
 
-            </ImageButton>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+
+
 
 
 

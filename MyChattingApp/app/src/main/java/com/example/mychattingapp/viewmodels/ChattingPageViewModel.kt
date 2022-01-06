@@ -15,9 +15,13 @@ class ChattingPageViewModel:ViewModel() {
 
     var message=ObservableField<String>()
     val recipientId:MutableLiveData<String> by lazy { MutableLiveData<String>() }
-    var messageList= ArrayList<Message>()
+    var messageList= MutableLiveData<ArrayList<Message>>()
+    var messages =ArrayList<Message>()
+    var path=MutableLiveData<String>()
 
-
+    init {
+        GetMessagesFromDB(path.value.toString())
+    }
 
 
     public fun Send_Message(view: View)
@@ -30,15 +34,13 @@ class ChattingPageViewModel:ViewModel() {
 
 
         val enteredMessage= message.get()
+        message.set("")
 
-            val message= enteredMessage?.let { recipientId.value?.let { it1 ->
-                Message(it,senderUid!!,
-                    it1
-                )
-            } }
-            if (message != null) {
-                saveChattingMessagesToDB( message ,senderRoom,recipientRoom)
-            }
+        val message=Message(enteredMessage!!,recipientId.value!!,senderUid!!)
+
+
+
+        saveChattingMessagesToDB( message ,senderRoom,recipientRoom)
 
 
 
@@ -57,24 +59,28 @@ class ChattingPageViewModel:ViewModel() {
     }
 
 
-    public fun GetMessagesFromDB():ArrayList<Message>
+    public fun GetMessagesFromDB(path:String)
     {
-        dbReference.child("chats").child("senderRoom").child("messages")
+        dbReference.child("chats").child(path).child("messages")
             .addValueEventListener(object :ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
+                    messages.clear()
                     for(itemising in snapshot.children)
                     {
                       val  m =itemising.getValue(Message::class.java)
-                        messageList.add(m!!)
+                        messages.add(m!!)
                     }
+                    messageList.postValue(messages)
+
+
+
+
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
                 }
 
             })
-        return messageList
 
     }
 
