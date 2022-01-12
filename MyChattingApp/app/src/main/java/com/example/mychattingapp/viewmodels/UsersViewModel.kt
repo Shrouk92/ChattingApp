@@ -8,12 +8,14 @@ import com.example.mychattingapp.model.ChattingUsers
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.runBlocking
 
 class UsersViewModel :ViewModel(){
     // livedata list of users names
     val userslist= MutableLiveData<ArrayList<ChattingUsers>>()
     val users= ArrayList<ChattingUsers>()
     init {
+
         get_users()
     }
 
@@ -21,32 +23,37 @@ class UsersViewModel :ViewModel(){
 
     public fun get_users()
     {
-        dbReference.child("user").addValueEventListener(object :ValueEventListener
-        {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (mysnapshot in snapshot.children)
-                {
-                    val chattingUsers=mysnapshot.getValue(ChattingUsers::class.java)
-                    if(firebaseAuth.currentUser?.email!=chattingUsers?.email) {
-                        if (chattingUsers != null) {
-                            users.add(chattingUsers)
-                        }
-                        else
-                        {
-                          val   c=ChattingUsers("em","em","em")
-                            users.add(c)
+
+        runBlocking{
+            dbReference.child("user").addValueEventListener(object :ValueEventListener
+            {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (mysnapshot in snapshot.children)
+                    {
+                        val chattingUsers=mysnapshot.getValue(ChattingUsers::class.java)
+                        if(firebaseAuth.currentUser?.email!=chattingUsers?.email) {
+                            if (chattingUsers != null) {
+                                users.add(chattingUsers)
+                            }
+                            else
+                            {
+                                val   c=ChattingUsers("em","em","em")
+                                users.add(c)
+                            }
                         }
                     }
+                    userslist.postValue(users)
+
                 }
-                userslist.postValue(users)
 
-            }
+                override fun onCancelled(error: DatabaseError) {
 
-            override fun onCancelled(error: DatabaseError) {
+                }
 
-            }
+            })
 
-        })
+        }
+
     }
 
 }

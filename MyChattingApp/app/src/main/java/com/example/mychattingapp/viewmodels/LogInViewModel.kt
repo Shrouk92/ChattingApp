@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
 import com.example.mychattingapp.utils.FirebaseUtils.firebaseAuth
 import com.example.mychattingapp.ui.MainActivity
 import com.example.mychattingapp.ui.SignUpActivity
-
+import kotlinx.coroutines.runBlocking
 
 
 class LogInViewModel:ViewModel() {
@@ -24,29 +24,32 @@ class LogInViewModel:ViewModel() {
     public fun logInUser(view:View)
     {
 
-        // Sign In to FireBase
-        email.get()?.let {
-            password.get()?.let { it1 ->
-                firebaseAuth
-                    .signInWithEmailAndPassword(it, it1)
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            val intent = Intent(view.context, MainActivity::class.java)
-                            view.context.startActivity(intent)
-                            val activity=view.context as Activity
-                            activity.finish()
+        runBlocking{
+            // Sign In to FireBase
+            email.get()?.let {
+                password.get()?.let { it1 ->
+                    firebaseAuth
+                        .signInWithEmailAndPassword(it, it1)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                val intent = Intent(view.context, MainActivity::class.java)
+                                view.context.startActivity(intent)
+                                val activity=view.context as Activity
+                                activity.finish()
 
 
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(
-                                view.context, "Authentication failed.",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Toast.makeText(
+                                    view.context, "Authentication failed.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         }
-                    }
+                }
             }
         }
+
     }
 
 
