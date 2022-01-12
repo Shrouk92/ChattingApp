@@ -11,13 +11,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.mychattingapp.R
 import com.example.mychattingapp.adapters.MyRecyclerAdapter
 import com.example.mychattingapp.databinding.ActivityMainBinding
-import com.example.mychattingapp.firebaseutils.FirebaseUtils.firebaseAuth
-import com.example.mychattingapp.model.ChattingUsers
+import com.example.mychattingapp.utils.FirebaseUtils.firebaseAuth
+import com.example.mychattingapp.viewmodels.ChattingPageViewModel
 import com.example.mychattingapp.viewmodels.UsersViewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var usersViewModel: UsersViewModel
+    private lateinit var messagesViewmodel:ChattingPageViewModel
     private lateinit var myRecyclerAdapter: MyRecyclerAdapter
 
 
@@ -25,17 +26,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding=DataBindingUtil.setContentView(this,R.layout.activity_main)
         usersViewModel=ViewModelProvider(this).get(UsersViewModel::class.java)
+        messagesViewmodel=ViewModelProvider(this).get(ChattingPageViewModel::class.java)
         binding.recyclerbinding=usersViewModel
+        binding.messagesbinding=messagesViewmodel
 
 
-        // do this one for recycler view of messages // in order not to repeate data
+
         usersViewModel.userslist.observe(this, Observer {
-        myRecyclerAdapter=MyRecyclerAdapter(it)
-            myRecyclerAdapter.notifyDataSetChanged()
-            binding.usersRecyclerview.adapter=myRecyclerAdapter
-
-        })
-
+                        myRecyclerAdapter=MyRecyclerAdapter(it )
+                    myRecyclerAdapter.notifyDataSetChanged()
+                    binding.usersRecyclerview.adapter=myRecyclerAdapter
+            })
 
 
     }

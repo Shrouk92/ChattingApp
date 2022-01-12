@@ -68,7 +68,7 @@
                 android:layout_marginLeft="350dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/ic_baseline_send_24"
-                android:onClick="@{chattingbinding::Send_Message}"
+                android:onClick="@{chattingbinding::sendMessage}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.739"

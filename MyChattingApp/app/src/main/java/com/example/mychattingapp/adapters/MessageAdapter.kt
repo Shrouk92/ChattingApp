@@ -1,15 +1,13 @@
 package com.example.mychattingapp.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mychattingapp.R
 import com.example.mychattingapp.databinding.RecievedMessageBinding
 import com.example.mychattingapp.databinding.SendmessageLayoutBinding
-import com.example.mychattingapp.databinding.UserItemBinding
-import com.example.mychattingapp.firebaseutils.FirebaseUtils.firebaseAuth
+import com.example.mychattingapp.utils.FirebaseUtils.firebaseAuth
 import com.example.mychattingapp.model.Message
 
 class MessageAdapter(val messages:ArrayList<Message>) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){

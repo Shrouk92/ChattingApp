@@ -1,4 +1,4 @@
-package com.example.mychattingapp.firebaseutils
+package com.example.mychattingapp.utils
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth

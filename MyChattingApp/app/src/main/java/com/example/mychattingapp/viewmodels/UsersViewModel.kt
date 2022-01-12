@@ -2,14 +2,12 @@ package com.example.mychattingapp.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.mychattingapp.firebaseutils.FirebaseUtils.dbReference
-import com.example.mychattingapp.firebaseutils.FirebaseUtils.firebaseAuth
+import com.example.mychattingapp.utils.FirebaseUtils.dbReference
+import com.example.mychattingapp.utils.FirebaseUtils.firebaseAuth
 import com.example.mychattingapp.model.ChattingUsers
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.getValue
 
 class UsersViewModel :ViewModel(){
     // livedata list of users names

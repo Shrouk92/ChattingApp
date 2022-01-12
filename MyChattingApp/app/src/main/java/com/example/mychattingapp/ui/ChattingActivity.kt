@@ -1,19 +1,14 @@
 package com.example.mychattingapp.ui
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mychattingapp.R
 import com.example.mychattingapp.adapters.MessageAdapter
 import com.example.mychattingapp.databinding.ActivityChattingBinding
-import com.example.mychattingapp.firebaseutils.FirebaseUtils
-import com.example.mychattingapp.firebaseutils.FirebaseUtils.firebaseAuth
-import com.example.mychattingapp.model.Message
+import com.example.mychattingapp.utils.FirebaseUtils.firebaseAuth
 import com.example.mychattingapp.viewmodels.ChattingPageViewModel
 
 class ChattingActivity : AppCompatActivity() {
@@ -32,12 +27,14 @@ class ChattingActivity : AppCompatActivity() {
         val senderUid= firebaseAuth.currentUser?.uid
         val  path=senderUid+recipientUid
         chattingPageViewModel.path.postValue(path)
-        chattingPageViewModel.GetMessagesFromDB(path)
+        chattingPageViewModel.getMessagesFromDB(path)
+
 
 
         chattingPageViewModel.messageList.observe(this, Observer {
 
             messageAdapter = MessageAdapter(it)
+
             messageAdapter.notifyDataSetChanged()
             chattingBinding.chatrecyclerview.adapter = messageAdapter
             chattingBinding.chatrecyclerview.smoothScrollToPosition(it.size)

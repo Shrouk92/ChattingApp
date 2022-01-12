@@ -1,6 +1,7 @@
 package com.example.mychattingapp.adapters
 
 import android.content.Intent
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mychattingapp.R
 import com.example.mychattingapp.databinding.UserItemBinding
 import com.example.mychattingapp.model.ChattingUsers
+import com.example.mychattingapp.model.Message
 import com.example.mychattingapp.ui.ChattingActivity
 
 class MyRecyclerAdapter(val data: ArrayList<ChattingUsers>):RecyclerView.Adapter<MyRecyclerAdapter.MyViewHolder>(){
@@ -29,9 +31,8 @@ class MyRecyclerAdapter(val data: ArrayList<ChattingUsers>):RecyclerView.Adapter
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentUser=data[position]
-//        holder.bindingItem.binding=currentUser
-//        holder.bindingItem.executePendingBindings()
       holder.bindingItem.textUser.text= currentUser.name
+        holder.bindingItem.msgId.text= "m"
 
         holder.itemView.setOnClickListener(View.OnClickListener {
             // open the chatting page when choice a person from list

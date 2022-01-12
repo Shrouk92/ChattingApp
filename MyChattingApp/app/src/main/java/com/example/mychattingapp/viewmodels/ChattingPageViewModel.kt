@@ -4,8 +4,8 @@ import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.mychattingapp.firebaseutils.FirebaseUtils
-import com.example.mychattingapp.firebaseutils.FirebaseUtils.dbReference
+import com.example.mychattingapp.utils.FirebaseUtils
+import com.example.mychattingapp.utils.FirebaseUtils.dbReference
 import com.example.mychattingapp.model.Message
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -20,29 +20,24 @@ class ChattingPageViewModel:ViewModel() {
     var path=MutableLiveData<String>()
 
     init {
-        GetMessagesFromDB(path.value.toString())
+        getMessagesFromDB(path.value.toString())
     }
 
 
-    public fun Send_Message(view: View)
+    public fun sendMessage(view: View)
     {
         val senderUid= FirebaseUtils.firebaseAuth.currentUser?.uid
-
-
         val senderRoom= recipientId.value + senderUid
        val recipientRoom= senderUid + recipientId.value
 
 
         val enteredMessage= message.get()
+
+
+        val messageObj=Message(enteredMessage!!,recipientId.value!!,senderUid!!)
         message.set("")
 
-        val message=Message(enteredMessage!!,recipientId.value!!,senderUid!!)
-
-
-
-        saveChattingMessagesToDB( message ,senderRoom,recipientRoom)
-
-
+        saveChattingMessagesToDB( messageObj ,senderRoom,recipientRoom)
 
     }
 
@@ -59,7 +54,7 @@ class ChattingPageViewModel:ViewModel() {
     }
 
 
-    public fun GetMessagesFromDB(path:String)
+    public fun getMessagesFromDB(path:String)
     {
         dbReference.child("chats").child(path).child("messages")
             .addValueEventListener(object :ValueEventListener{

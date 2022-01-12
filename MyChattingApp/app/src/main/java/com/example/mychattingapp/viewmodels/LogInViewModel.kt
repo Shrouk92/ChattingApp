@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
-import com.example.mychattingapp.firebaseutils.FirebaseUtils.firebaseAuth
+import com.example.mychattingapp.utils.FirebaseUtils.firebaseAuth
 import com.example.mychattingapp.ui.MainActivity
 import com.example.mychattingapp.ui.SignUpActivity
 
@@ -21,7 +21,7 @@ class LogInViewModel:ViewModel() {
 
 
     // Function to LogIn User
-    public fun Log_In_User(view:View)
+    public fun logInUser(view:View)
     {
 
         // Sign In to FireBase
@@ -52,7 +52,7 @@ class LogInViewModel:ViewModel() {
 
 
     // Go to signUp page
-    public fun Move_To_SignUpPage(view: View)
+    public fun moveToSignUpPage(view: View)
     {
         val intent=Intent(view.context, SignUpActivity::class.java)
         view.context.startActivity(intent)
