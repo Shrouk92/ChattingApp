@@ -7,9 +7,7 @@
         <variable
             name="recyclerbinding"
             type="com.example.mychattingapp.viewmodels.UsersViewModel" />
-        <variable
-            name="messagesbinding"
-            type="com.example.mychattingapp.viewmodels.ChattingPageViewModel" />
+
 
     </data>
 

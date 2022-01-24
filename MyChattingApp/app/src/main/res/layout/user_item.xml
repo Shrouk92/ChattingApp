@@ -25,15 +25,7 @@
             android:padding="15dp">
 
         </TextView>
-        <TextView
-            android:id="@+id/msg_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="20dp"
-            android:padding="5dp"
-            android:text="Messages"
-            />
+
 
 
     </LinearLayout>

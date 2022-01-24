@@ -32,7 +32,6 @@ class MyRecyclerAdapter(val data: ArrayList<ChattingUsers>):RecyclerView.Adapter
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentUser=data[position]
       holder.bindingItem.textUser.text= currentUser.name
-        holder.bindingItem.msgId.text= "m"
 
         holder.itemView.setOnClickListener(View.OnClickListener {
             // open the chatting page when choice a person from list
