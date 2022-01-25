@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/My_GitHub/ChattingApp/MyChattingApp/app/src/main/res/drawable/box.xml" value="0.25277777777777777" />
+        <entry key="..\:/My_GitHub/ChattingApp/MyChattingApp/app/src/main/res/drawable/userbox.xml" value="0.25277777777777777" />
         <entry key="..\:/My_GitHub/ChattingApp/MyChattingApp/app/src/main/res/layout/activity_chatting.xml" value="0.10677083333333333" />
         <entry key="..\:/My_GitHub/ChattingApp/MyChattingApp/app/src/main/res/layout/activity_log_in.xml" value="0.14356884057971014" />
         <entry key="..\:/My_GitHub/ChattingApp/MyChattingApp/app/src/main/res/layout/activity_main.xml" value="0.14356884057971014" />

@@ -34,13 +34,14 @@ class MainActivity : AppCompatActivity() {
         usersViewModel = ViewModelProvider(this).get(UsersViewModel::class.java)
 
         binding.recyclerbinding = usersViewModel
-        usersViewModel = UsersViewModel()
         runBlocking {
-         usersViewModel.getUsers()
-        }
+           usersViewModel = UsersViewModel()
+      }
 
 
-        usersViewModel.usersList.observe(this@MainActivity, Observer {
+
+
+        usersViewModel.usersResponse.observe(this@MainActivity, Observer {
                 myRecyclerAdapter = MyRecyclerAdapter(it)
                 myRecyclerAdapter.notifyDataSetChanged()
                 binding.usersRecyclerview.adapter = myRecyclerAdapter
