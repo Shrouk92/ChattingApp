@@ -20,16 +20,15 @@ class UsersViewModel : ViewModel() {
 
     init {
         runBlocking {
-            getUsers()
+           // usersList=UsersRepository.getAllUsers()
 
         }
     }
 
 
-    suspend fun getUsers() {
 
-        usersList=UsersRepository.getAllUsers()
-    }
+
+
 
 
 }

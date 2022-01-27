@@ -2,22 +2,39 @@ package com.example.mychattingapp.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.mychattingapp.database.UsersDao
 import com.example.mychattingapp.model.ChattingUsers
 import com.example.mychattingapp.utils.FirebaseUtils
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.runBlocking
 
-object UsersRepository {
+class UsersRepository(private val usersDao: UsersDao) {
 
-    private val userLiveList=MutableLiveData<ArrayList<ChattingUsers>>()
+    // Receive data from Firebase DB
+     var userLiveList=MutableLiveData<ArrayList<ChattingUsers>>()
+
+    //  Get All Users from  Room DB
+    val userListFromRDB:MutableLiveData<ArrayList<ChattingUsers>> =usersDao.getUsersFromDB()
 
 
-    // Move this fun to Repo
-    fun getAllUsers():MutableLiveData<ArrayList<ChattingUsers>>{
+
+    // insert all users to DB which back from firebase
+   private suspend fun addUsersToDB(users:MutableLiveData<ArrayList<ChattingUsers>>)
+    {
+        users.value?.let { usersDao.insertUsers(it) }
+    }
+
+
+
+
+    // Get All users from firebase realtime database and save the in th Room DB
+    suspend fun getAllUsers():MutableLiveData<ArrayList<ChattingUsers>>{
 
         val users= ArrayList<ChattingUsers>()
+
 
         FirebaseUtils.dbReference.child("user").addValueEventListener(object :
                 ValueEventListener
@@ -28,9 +45,8 @@ object UsersRepository {
                         val chattingUsers=mysnapshot.getValue(ChattingUsers::class.java)
                         if(FirebaseUtils.firebaseAuth.currentUser?.email!=chattingUsers?.email) {
                             if (chattingUsers != null) {
-                            //  users.add(chattingUsers)
-                                val   c= ChattingUsers("empty","empty","empty")
-                                users.add(c)
+                             users.add(chattingUsers)
+
                             }
 
                             else
@@ -49,6 +65,7 @@ object UsersRepository {
 
             })
         userLiveList.postValue(users)
+        addUsersToDB(userLiveList)
 
       return userLiveList
     }

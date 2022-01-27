@@ -18,6 +18,7 @@ import com.example.mychattingapp.utils.FirebaseUtils.firebaseAuth
 import com.example.mychattingapp.viewmodels.ChattingPageViewModel
 import com.example.mychattingapp.viewmodels.UsersViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
@@ -26,32 +27,29 @@ class MainActivity : AppCompatActivity() {
     private lateinit var usersViewModel: UsersViewModel
     private lateinit var myRecyclerAdapter: MyRecyclerAdapter
 
-
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         usersViewModel = ViewModelProvider(this).get(UsersViewModel::class.java)
-
         binding.recyclerbinding = usersViewModel
+        binding.lifecycleOwner = this
         runBlocking {
-           usersViewModel = UsersViewModel()
-      }
+            usersViewModel.usersResponse.observe(this@MainActivity, Observer {
+                it?.let {
+                    myRecyclerAdapter = MyRecyclerAdapter(it)
+                    myRecyclerAdapter.notifyDataSetChanged()
+                    binding.usersRecyclerview.adapter = myRecyclerAdapter
+                }
 
 
-
-
-        usersViewModel.usersResponse.observe(this@MainActivity, Observer {
-                myRecyclerAdapter = MyRecyclerAdapter(it)
-                myRecyclerAdapter.notifyDataSetChanged()
-                binding.usersRecyclerview.adapter = myRecyclerAdapter
             })
 
-
-
-
+        }
 
     }
+
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu, menu)

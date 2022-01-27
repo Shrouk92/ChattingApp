@@ -12,12 +12,13 @@ import com.example.mychattingapp.model.ChattingUsers
 interface UsersDao {
 
 
-   // Get all users from DB and send to ViewModel
+   // Get all users from DB to repo
     @Query( "Select * from Users_Table")
-     fun getAllUsers(): LiveData<ArrayList<ChattingUsers>>
+     fun getUsersFromDB(): MutableLiveData<ArrayList<ChattingUsers>>
 
 
      // Insert Users from back_end "FireBase " to the DB
+     // onConflict ignore in order not to repeat data
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertUsers( vararg Users:ChattingUsers)
+    suspend fun insertUsers( vararg Users:ArrayList<ChattingUsers>)
 }
