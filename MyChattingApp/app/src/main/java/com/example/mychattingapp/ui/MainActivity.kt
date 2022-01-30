@@ -11,44 +11,47 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.mychattingapp.R
 import com.example.mychattingapp.adapters.MyRecyclerAdapter
+import com.example.mychattingapp.database.UsersDao
 import com.example.mychattingapp.databinding.ActivityMainBinding
 import com.example.mychattingapp.model.ChattingUsers
 import com.example.mychattingapp.repository.UsersRepository
 import com.example.mychattingapp.utils.FirebaseUtils.firebaseAuth
-import com.example.mychattingapp.viewmodels.ChattingPageViewModel
 import com.example.mychattingapp.viewmodels.UsersViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    @InternalCoroutinesApi
     private lateinit var usersViewModel: UsersViewModel
     private lateinit var myRecyclerAdapter: MyRecyclerAdapter
+    private lateinit var repository: UsersRepository
+    private lateinit var dao: UsersDao
 
+    @DelicateCoroutinesApi
+    @InternalCoroutinesApi
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+
+
         usersViewModel = ViewModelProvider(this).get(UsersViewModel::class.java)
+
         binding.recyclerbinding = usersViewModel
         binding.lifecycleOwner = this
-        runBlocking {
-            usersViewModel.usersResponse.observe(this@MainActivity, Observer {
-                it?.let {
-                    myRecyclerAdapter = MyRecyclerAdapter(it)
-                    myRecyclerAdapter.notifyDataSetChanged()
-                    binding.usersRecyclerview.adapter = myRecyclerAdapter
-                }
+
+        usersViewModel.allUsersList.observe(this , Observer {
+            myRecyclerAdapter =
+                MyRecyclerAdapter(it as ArrayList<ChattingUsers>)
+            myRecyclerAdapter.notifyDataSetChanged()
+            binding.usersRecyclerview.adapter = myRecyclerAdapter
+        })
 
 
-            })
 
-        }
 
     }
-
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
