@@ -17,13 +17,9 @@ class UsersRepository(private val usersDataBase: UsersDataBase) {
 
     // Receive data from Firebase
    private val usersList = MutableLiveData<ArrayList<ChattingUsers>>()
-    val uLiveData : LiveData<ArrayList<ChattingUsers>>
-          get() = usersList
 
 
-
-
-    // Live data from DB
+    // Live data from DB " offline caching "
     val usersLiveList: LiveData<List<ChattingUsers>> =
         usersDataBase.getDao.getUsers()
 
@@ -32,16 +28,20 @@ class UsersRepository(private val usersDataBase: UsersDataBase) {
     suspend fun refreshDatabase() {
         withContext(Dispatchers.IO)
         {
+            // userList have the users from RealTime Firebase database
             val usersList = getAllUsers()
-            usersList.value?.let { usersDataBase.getDao.insertUsers(it) }
-
+                delay(1000)
+            usersList.value?.let {
+                // saving users in the database
+                usersDataBase.getDao.insertUsers(it)
+            }
 
         }
     }
 
 
     // Get All users from firebase realtime database and save the in th Room DB
-    suspend fun getAllUsers(): MutableLiveData<ArrayList<ChattingUsers>> {
+    suspend  fun getAllUsers(): MutableLiveData<ArrayList<ChattingUsers>> {
 
         val users = ArrayList<ChattingUsers>()
         FirebaseUtils.dbReference.child("user").addValueEventListener(object :

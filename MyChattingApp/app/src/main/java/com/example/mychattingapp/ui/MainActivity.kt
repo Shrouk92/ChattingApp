@@ -41,14 +41,14 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerbinding = usersViewModel
         binding.lifecycleOwner = this
 
-        usersViewModel.allUsersList.observe(this , Observer {
-            myRecyclerAdapter =
-                MyRecyclerAdapter(it as ArrayList<ChattingUsers>)
-            myRecyclerAdapter.notifyDataSetChanged()
-            binding.usersRecyclerview.adapter = myRecyclerAdapter
-        })
-
-
+        runBlocking{
+            usersViewModel.userLiveData.observe(this@MainActivity , Observer {
+                myRecyclerAdapter =
+                    MyRecyclerAdapter(it as ArrayList<ChattingUsers>)
+                myRecyclerAdapter.notifyDataSetChanged()
+                binding.usersRecyclerview.adapter = myRecyclerAdapter
+            })
+        }
 
 
     }

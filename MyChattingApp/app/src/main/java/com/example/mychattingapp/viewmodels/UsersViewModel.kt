@@ -29,13 +29,13 @@ class UsersViewModel(application: Application) : AndroidViewModel(application) {
 
 
     init {
-
         viewModelScope.launch {
             usersRepository.refreshDatabase()
+
         }
     }
     // livedata list of users names
-   val allUsersList=usersRepository.uLiveData
+    val userLiveData=usersRepository.usersLiveList
 
 
 
