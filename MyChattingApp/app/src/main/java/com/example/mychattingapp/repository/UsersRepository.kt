@@ -30,7 +30,7 @@ class UsersRepository(private val usersDataBase: UsersDataBase) {
         {
             // userList have the users from RealTime Firebase database
             val usersList = getAllUsers()
-                delay(1000)
+                delay(1500)
             usersList.value?.let {
                 // saving users in the database
                 usersDataBase.getDao.insertUsers(it)

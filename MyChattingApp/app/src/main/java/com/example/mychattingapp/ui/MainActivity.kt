@@ -24,8 +24,7 @@ class MainActivity : AppCompatActivity() {
     @InternalCoroutinesApi
     private lateinit var usersViewModel: UsersViewModel
     private lateinit var myRecyclerAdapter: MyRecyclerAdapter
-    private lateinit var repository: UsersRepository
-    private lateinit var dao: UsersDao
+
 
     @DelicateCoroutinesApi
     @InternalCoroutinesApi
@@ -33,11 +32,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-
-
-
         usersViewModel = ViewModelProvider(this).get(UsersViewModel::class.java)
-
         binding.recyclerbinding = usersViewModel
         binding.lifecycleOwner = this
 

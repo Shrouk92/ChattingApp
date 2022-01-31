@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:background="@drawable/userbox"
        >
 
         <TextView
@@ -22,9 +23,14 @@
             android:layout_margin="5dp"
             android:textSize="30sp"
             android:textColor="@color/black"
-            android:padding="15dp">
+            android:padding="10dp">
 
         </TextView>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/white"/>
+
 
 
 

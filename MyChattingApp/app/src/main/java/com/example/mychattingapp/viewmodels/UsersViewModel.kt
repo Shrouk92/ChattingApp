@@ -15,11 +15,7 @@ import kotlinx.coroutines.flow.Flow
 @InternalCoroutinesApi
 class UsersViewModel(application: Application) : AndroidViewModel(application) {
 
-
-
-
     private val viewModelJob= SupervisorJob()
-
     private val viewModelScope= CoroutineScope(viewModelJob+Dispatchers.Main)
     @InternalCoroutinesApi
     private val dataBase = getDatabase(application)
